@@ -1,0 +1,205 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bangers), Impact, sans-serif;
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-manga-red: var(--manga-red);
+  --color-gold: var(--gold);
+  --color-teal: var(--teal);
+  --color-blossom: var(--blossom);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  color-scheme: dark;
+  --paper: #f6eed9;
+  --ink: #16130f;
+  --manga-red: #d92d27;
+  --gold: #f2b51d;
+  --teal: #17807f;
+  --blossom: #f28aa0;
+
+  --background: var(--ink);
+  --foreground: var(--paper);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--manga-red);
+  --primary-foreground: var(--paper);
+  --secondary: var(--teal);
+  --secondary-foreground: var(--paper);
+  --muted: #2a251f;
+  --muted-foreground: #cfc5ad;
+  --accent: var(--gold);
+  --accent-foreground: var(--ink);
+  --destructive: var(--manga-red);
+  --border: #3a332b;
+  --input: #3a332b;
+  --ring: var(--gold);
+  --radius: 0.25rem;
+
+  --page-w: min(46vw, 520px, calc((100svh - 200px) * 0.75));
+}
+
+@media (max-width: 767px) {
+  :root {
+    --page-w: min(92vw, calc((100svh - 200px) * 0.75));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@utility desk-bg {
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(circle at 12% 18%, color-mix(in oklab, var(--manga-red) 45%, transparent) 0 9rem, transparent 18rem),
+    radial-gradient(circle at 88% 82%, color-mix(in oklab, var(--gold) 35%, transparent) 0 8rem, transparent 20rem),
+    radial-gradient(circle at 85% 12%, color-mix(in oklab, var(--teal) 40%, transparent) 0 6rem, transparent 14rem),
+    radial-gradient(color-mix(in oklab, var(--paper) 9%, transparent) 1px, transparent 1.4px);
+  background-size: auto, auto, auto, 9px 9px;
+}
+
+@utility paper-texture {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgb(255 255 255 / 0.6), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgb(180 150 100 / 0.12), transparent 45%);
+}
+
+@utility halftone {
+  background-image: radial-gradient(currentColor 22%, transparent 24%);
+  background-size: 2.2cqi 2.2cqi;
+}
+
+@utility speedlines {
+  background-image: repeating-conic-gradient(from 0deg at 50% 50%, currentColor 0deg 1.6deg, transparent 1.6deg 7deg);
+  mask-image: radial-gradient(circle at 50% 50%, transparent 22%, black 60%);
+}
+
+@utility comic-shadow {
+  box-shadow: 1.2cqi 1.2cqi 0 var(--ink);
+}
+
+@utility comic-shadow-sm {
+  box-shadow: 0.7cqi 0.7cqi 0 var(--ink);
+}
+
+@utility ink-stroke {
+  -webkit-text-stroke: 0.7cqi var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 1cqi 1cqi 0 var(--ink);
+}
+
+@utility burst {
+  clip-path: polygon(50% 0%, 59% 15%, 75% 4%, 76% 22%, 95% 18%, 87% 35%, 100% 46%, 86% 56%, 96% 73%, 78% 74%, 80% 93%, 63% 84%, 52% 100%, 42% 85%, 25% 96%, 23% 77%, 4% 80%, 13% 62%, 0% 50%, 13% 38%, 3% 22%, 22% 22%, 22% 3%, 39% 14%);
+}
+
+@utility barcode {
+  background-image: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px, var(--ink) 8px 11px, transparent 11px 12px);
+}
+
+/* Flip book mechanics */
+.book-stage {
+  perspective: 2600px;
+}
+
+.book {
+  position: relative;
+  width: calc(var(--page-w) * 2);
+  height: calc(var(--page-w) * 4 / 3);
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transform-style: preserve-3d;
+}
+
+.book[data-mode='single'] {
+  width: var(--page-w);
+}
+
+.leaf {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.book[data-mode='single'] .leaf {
+  left: 0;
+  width: 100%;
+}
+
+.leaf-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  container-type: inline-size;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+}
+
+.leaf-face[data-side='back'] {
+  transform: rotateY(180deg);
+}
+
+.leaf-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.leaf-face[data-side='front']::after {
+  background: linear-gradient(90deg, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0.06) 6%, transparent 14%);
+}
+
+.leaf-face[data-side='back']::after {
+  background: linear-gradient(270deg, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0.06) 6%, transparent 14%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book,
+  .leaf {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+}
