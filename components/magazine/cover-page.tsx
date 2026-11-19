@@ -29,7 +29,7 @@ export function CoverPage() {
           MANIFEST!
         </p>
         <p className="w-fit -rotate-2 bg-manga-red px-[3cqi] py-[1cqi] font-display text-[4.6cqi] tracking-wider text-paper comic-shadow-sm">
-          {'Luck ✦ Wealth ✦ Happiness'}
+          {'Luck • Wealth • Happiness'}
         </p>
 
         <ul className="mt-[6cqi] flex flex-col gap-[2.5cqi]">
